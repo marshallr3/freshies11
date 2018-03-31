@@ -138,7 +138,7 @@ app.get('/accept', function(req,res)
        }
        if (dep == 0){
        io.emit('chat message' , JSON.stringify({plate: req.query.plate, valid: "false", lot:req.query.lot, msg: "Not Found In Database" }));       
-       sendData({valid :"false",mes:"Not in DB"});
+       sendData({valid :"false",msg:"Not in DB"});
        }
 
 
