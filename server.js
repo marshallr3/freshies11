@@ -11,11 +11,8 @@
 
 var express = require('express');
 var app = express();
-var http=require('http');
-var server = http.createServer(function(req,res){
-    res.end('test');
-}); 
-var io = require('socket.io')(server);
+var server  = require('http').createServer(app);
+var io      = require('socket.io').listen(server);
 var fs = require('fs');
 var port = process.env.PORT || 3000;
 let path = require('path');
@@ -30,38 +27,20 @@ app.get('/', function(req, res)
     res.writeHead(200, {'Content-Type': 'text/html'});
     res.end(html);
 });
-// the first request that sends lambda all jobs
-app.get("/all",function(req,res){
-    fs.readFile('public/all.json', 'utf8',function(err, data)
-    {
-    // var json = JSON.parse(data);
-    //console.log(typeof data);
-    //console.log(data);
-    res.end(data);
-    });
-//res.sendfile(path.join(__dirname+"/all.json"));
+let xi = 0;
+
+io.on('connection', function(socket){
+    xi++;
+    console.log(xi);
+    console.log('a user connected');
+    fs.appendFileSync('public/database.json', xi, encoding='utf8');
+    //fs.writeFile("public/database.json", "xi", function(err){})
+
 });
-
-// io.on('connection', function(socket){
-  
-//     fs.writeFile("public/database.json", "this works", function(err){})
-
-// });
-
-app.get("/changeall",function(req,res){
-    fs.readFile('public/all.json', 'utf8',function(err, data)
-    {
-     var json = JSON.parse(data);
-    json.shipments.push(req.query);
-     //console.log(typeof data);
-    //console.log(data);
-    fs.writeFile("public/all.json", JSON.stringify(json), function(err){})
-    res.end("successful change all ");
-    });
 
     
 //res.sendfile(path.join(__dirname+"/all.json"));
-});
+
 
 
 // accept is the request  that lambda makes to eb to update the accepted jobs json on eb
@@ -83,8 +62,8 @@ console.log("local running");
 server.on('listening',function(){
     console.log('ok, server is running');
 });
-server.listen(port);
+ server.listen(port);
 // server.listen(3000, function(){
 //     console.log('listening on *:3000');
 //   });
-app.listen(port);
+//app.listen(port);
