@@ -64,20 +64,25 @@
 
 <html>
 <head>
-<style>.plate {
+<style>
+
+body {
+  background-color: lightgray
+}
+.plate {
     width:50%;
     margin:auto;
     padding:5px;
-    border:black solid 2px;
+    border:black solid 6px;
     font-size:180%;
     text-align:center;
     margin-bottom:10px;
     cursor:pointer;
     background-color:white;
 }.valid {
-    border:green solid 2px;
+    border:green solid 6px;
 }.invalid {
-    border:red solid 2px;
+    border:red solid 6px;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
@@ -107,7 +112,8 @@ crossorigin="anonymous"></script>
 function addToDOM(plate) {
   console.log(plate);
     let cl = plate.valid=="true" ? "valid":"invalid"
-    document.getElementById("plates").innerHTML += "<div class='plate " + cl + "' onclick='alert(\"" + plate.msg + "\")'><span>" + plate.plate + "</span></div>"
+    let stringy = "      Lot Found In: ";
+    document.getElementById("plates").innerHTML += "<div class='plate " + cl + "' onclick='alert(\"" + plate.msg + "\")'><span>" + plate.plate + "<br>Found In Lot: " + plate.lot +"</span></div>"
 }
 
 </script>
