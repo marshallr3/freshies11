@@ -116,14 +116,22 @@ app.get('/accept', function(req,res)
        {
            console.log(json1.license[i].plate)
            console.log("x.plate= " + req.query.plate)
-           if (req.query.plate == json1.license[i].plate)
-           {
+           if (req.query.plate == json1.license[i].plate){
+
                console.log("is equal");
+               if (req.query.lot == json1.license[i].lot)
+               {
+                   sendData({valid: "true", msg:""})
+               }
+               else
+               {
+                   sendData({valid: "false", msg:"Not in correct lot"})
+               }
                sendData({valid:"true"});
            }
 
        }
-       sendData({valid :"false"});
+       sendData({valid :"false",mes:"Not in DB"});
 
 
        //return "false";
