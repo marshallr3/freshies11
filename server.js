@@ -58,10 +58,11 @@ app.get('/accept', function(req,res)
     {
         //console.log(data);
         var json = JSON.parse(data);
+        console.log(json);
         //json.name = Math.random();
-        //console.log(req.query);
-        json.ships.push(req.query);
-        fs.writeFile("public/accept.json", JSON.stringify(json), function(err){});
+        console.log(req.query);
+       // json(req.query);
+        fs.writeFile("public/accept.json", JSON.stringify(req.query), function(err){});
         res.end("success");
     });
 });
