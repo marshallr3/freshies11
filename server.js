@@ -121,13 +121,13 @@ app.get('/accept', function(req,res)
                console.log("is equal");
                if (req.query.lot == json1.license[i].lot)
                {
+                 io.emit('chat message' , JSON.stringify({plate: req.query.plate, valid: "true" }));
                    sendData({valid: "true", msg:""})
                }
                else
                {
                    sendData({valid: "false", msg:"Not in correct lot"})
                }
-               sendData({valid:"true"});
            }
 
        }
