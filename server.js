@@ -128,7 +128,7 @@ app.get('/accept', function(req,res)
                }
                else
                {
-                io.emit('chat message' , JSON.stringify({plate: req.query.plate, valid: "true", lot:req.query.lot, msg: "Not In Correct Lot" }));
+                io.emit('chat message' , JSON.stringify({plate: req.query.plate, valid: "false", lot:req.query.lot, msg: "Not In Correct Lot" }));
                    sendData({valid: "false", msg:"Not in correct lot"});
                    dep = 1;
                    break;
@@ -137,7 +137,7 @@ app.get('/accept', function(req,res)
 
        }
        if (dep == 0){
-       io.emit('chat message' , JSON.stringify({plate: req.query.plate, valid: "true", lot:req.query.lot, msg: "Not Found In Database" }));       
+       io.emit('chat message' , JSON.stringify({plate: req.query.plate, valid: "false", lot:req.query.lot, msg: "Not Found In Database" }));       
        sendData({valid :"false",mes:"Not in DB"});
        }
 

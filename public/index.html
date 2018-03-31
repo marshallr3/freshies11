@@ -105,6 +105,7 @@ crossorigin="anonymous"></script>
 <script>
 
 function addToDOM(plate) {
+  console.log(plate);
     let cl = plate.valid ? "valid":"invalid"
     document.getElementById("plates").innerHTML += "<div class='plate " + cl + "' onclick='alert(\"" + plate.msg + "\")'><span>" + plate.plate + "</span></div>"
 }
