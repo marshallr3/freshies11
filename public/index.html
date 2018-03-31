@@ -14,7 +14,7 @@
 </body>
 
 </html> -->
-
+<!-- 
 <!doctype html>
 <html>
   <head>
@@ -60,4 +60,64 @@
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
   </body>
+</html> -->
+
+<html>
+<head>
+<style>.plate {
+    width:50%;
+    margin:auto;
+    padding:5px;
+    border:black solid 2px;
+    font-size:180%;
+    text-align:center;
+    margin-bottom:10px;
+    cursor:pointer;
+    background-color:white;
+}.valid {
+    border:green solid 2px;
+}.invalid {
+    border:red solid 2px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+
+</style>
+<script
+src="https://code.jquery.com/jquery-3.3.1.min.js"
+integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+crossorigin="anonymous"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io();
+  </script>
+</head>
+<body>
+<div id="plates"></div>
+
+
+<script>
+
+function addToDOM(plate) {
+    let cl = plate.valid ? "valid":"invalid"
+    document.getElementById("plates").innerHTML += "<div class='plate " + cl + "' onclick='alert(\"" + plate.msg + "\")'><span>" + plate.plate + "</span></div>"
+}
+
+</script>
+
+
+<script>
+    $(function () {
+      var socket = io();
+      socket.on('chat message', function(msg){
+        addToDOM(JSON.parse(msg))
+      });
+    });
+    </script>
 </html>
