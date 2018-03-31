@@ -11,7 +11,6 @@ phases:
   pre_build:
     commands:
       # Discover and run unit tests in the 'tests' directory
-      - npm test
 artifacts:
   type: zip
   files:
