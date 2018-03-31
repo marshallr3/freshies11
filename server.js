@@ -29,16 +29,22 @@ app.get('/', function(req, res)
 });
 let xi = 0;
 
-io.on('connection', function(socket){
-    xi++;
-    console.log(xi);
-    console.log('a user connected');
-    fs.appendFileSync('public/database.json', xi, encoding='utf8');
-    //fs.writeFile("public/database.json", "xi", function(err){})
+// io.on('connection', function(socket){
+//     xi++;
+//     console.log(xi);
+//     console.log('a user connected');
+//     fs.appendFileSync('public/database.json', xi, encoding='utf8');
+//     //fs.writeFile("public/database.json", "xi", function(err){})
 
-});
+// });
 
-    
+// io.on('connection', function(socket){
+//     socket.on('chat message', function(msg){
+//       io.emit('chat message', msg);
+//     });
+//   });
+
+    let msg = "this works";
 //res.sendfile(path.join(__dirname+"/all.json"));
 app.get('/test', function(req, res)
 {
@@ -46,9 +52,44 @@ app.get('/test', function(req, res)
     {
     // var json = JSON.parse(data);
     //console.log(typeof data);
+    io.emit('chat message' , msg);
      res.end(data);
     });
 });
+var value = 0;
+function validation(x)
+{
+
+ fs.readFile('public/database.json', 'utf8', function(err, data)
+    {
+       var json1 = JSON.parse(data); 
+       //console.log(json);
+       for (i=0; i < json1.license.length; i++)
+       {
+           console.log(json1.license[i].plate)
+           console.log("x.plate= " + x.plate)
+           if (x.plate == json1.license[i].plate)
+           {
+               console.log("is equal");
+               return true;
+           }
+
+       }
+       return false;
+
+
+       //return "false";
+    });
+    // console.log(value);
+    // if (value)
+    // {
+    //     return "true";
+    // }
+    // elseeturn true;
+    // {
+    //     return "false";
+    // }
+}
 
 
 // accept is the request  that lambda makes to eb to update the accepted jobs json on eb
@@ -58,12 +99,36 @@ app.get('/accept', function(req,res)
     {
         //console.log(data);
         var json = JSON.parse(data);
-        console.log(json);
+      // console.log(json);
         //json.name = Math.random();
-        console.log(req.query);
+        // console.log(req.query);
        // json(req.query);
         fs.writeFile("public/accept.json", JSON.stringify(req.query), function(err){});
-        res.end(JSON.stringify({ valid : "true" })); 
+       // console.log("validation: " + validation(req.query));
+       const sendData = (data) => {
+        res.end(JSON.stringify(data));
+    } 
+        fs.readFile('public/database.json', 'utf8', function(err, data)
+    {
+       var json1 = JSON.parse(data); 
+       //console.log(json);
+       for (i=0; i < json1.license.length; i++)
+       {
+           console.log(json1.license[i].plate)
+           console.log("x.plate= " + req.query.plate)
+           if (req.query.plate == json1.license[i].plate)
+           {
+               console.log("is equal");
+               sendData({valid:"true"});
+           }
+
+       }
+       sendData({valid :"false"});
+
+
+       //return "false";
+    });
+        //res.end(JSON.stringify({ valid : validation(req.query) }));
         //res.end("fuck");
     });
 });
