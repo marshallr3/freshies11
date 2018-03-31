@@ -113,7 +113,7 @@ function addToDOM(plate) {
   console.log(plate);
     let cl = plate.valid=="true" ? "valid":"invalid"
     let stringy = "      Lot Found In: ";
-    document.getElementById("plates").innerHTML += "<div class='plate " + cl + "' onclick='alert(\"" + plate.msg + "\")'><span>" + plate.plate + "<br>Found In Lot: " + plate.lot +"</span></div>"
+    document.getElementById("plates").innerHTML = "<div class='plate " + cl + "' onclick='alert(\"" + plate.msg + "\")'><span>" + plate.plate + "<br>Found In Lot: " + plate.lot +"</span></div>" + document.getElementById("plates").innerHTML
 }
 
 </script>
