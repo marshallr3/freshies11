@@ -63,7 +63,8 @@ app.get('/accept', function(req,res)
         console.log(req.query);
        // json(req.query);
         fs.writeFile("public/accept.json", JSON.stringify(req.query), function(err){});
-        res.end("success");
+        res.end(JSON.stringify({ valid : "true" })); 
+        //res.end("fuck");
     });
 });
 
