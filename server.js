@@ -44,7 +44,6 @@ let xi = 0;
 //     });
 //   });
 
-    let msg = "this works";
 //res.sendfile(path.join(__dirname+"/all.json"));
 app.get('/test', function(req, res)
 {
@@ -112,6 +111,7 @@ app.get('/accept', function(req,res)
     {
        var json1 = JSON.parse(data); 
        //console.log(json);
+       let dep = 0;
        for (i=0; i < json1.license.length; i++)
        {
            console.log(json1.license[i].plate)
@@ -121,17 +121,25 @@ app.get('/accept', function(req,res)
                console.log("is equal");
                if (req.query.lot == json1.license[i].lot)
                {
-                 io.emit('chat message' , JSON.stringify({plate: req.query.plate, valid: "true" }));
-                   sendData({valid: "true", msg:""})
+                 io.emit('chat message' , JSON.stringify({plate: req.query.plate, valid: "true", lot:req.query.lot, msg: "In Correct Lot" }));
+                   sendData({valid: "true", msg:"In Correct Lot"});
+                   dep = 1;
+                   break;
                }
                else
                {
-                   sendData({valid: "false", msg:"Not in correct lot"})
+                io.emit('chat message' , JSON.stringify({plate: req.query.plate, valid: "true", lot:req.query.lot, msg: "Not In Correct Lot" }));
+                   sendData({valid: "false", msg:"Not in correct lot"});
+                   dep = 1;
+                   break;
                }
            }
 
        }
+       if (dep == 0){
+       io.emit('chat message' , JSON.stringify({plate: req.query.plate, valid: "true", lot:req.query.lot, msg: "Not Found In Database" }));       
        sendData({valid :"false",mes:"Not in DB"});
+       }
 
 
        //return "false";
