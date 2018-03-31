@@ -55,7 +55,7 @@ app.get('/test', function(req, res)
 app.get('/accept', function(req,res)
 {    
     fs.readFile("public/accept.json", 'utf8',function (err, data)
-    {console.log('a user connected');
+    {
         //console.log(data);
         var json = JSON.parse(data);
         //json.name = Math.random();
