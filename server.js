@@ -40,7 +40,15 @@ io.on('connection', function(socket){
 
     
 //res.sendfile(path.join(__dirname+"/all.json"));
-
+app.get('/test', function(req, res)
+{
+    fs.readFile('public/database.json', 'utf8',function(err, data)
+    {
+    // var json = JSON.parse(data);
+    //console.log(typeof data);
+     res.end(data);
+    });
+});
 
 
 // accept is the request  that lambda makes to eb to update the accepted jobs json on eb
